@@ -17,6 +17,7 @@ io.on("connect", (socket) => {
         [boardName]: { ...storedData[boardName], [user.id]: user },
       };
 
+      socket.emit(boardName, { ...storedData[boardName] });
       socket.broadcast.emit(boardName, { ...storedData[boardName] });
     });
   });
