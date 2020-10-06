@@ -1,11 +1,11 @@
 {
   "files": {
-    "main.js": "/static/js/main.914971b6.chunk.js",
-    "main.js.map": "/static/js/main.914971b6.chunk.js.map",
+    "main.js": "/static/js/main.57ea0bd6.chunk.js",
+    "main.js.map": "/static/js/main.57ea0bd6.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.61bb465f.js",
     "runtime-main.js.map": "/static/js/runtime-main.61bb465f.js.map",
-    "static/js/2.90c17ee1.chunk.js": "/static/js/2.90c17ee1.chunk.js",
-    "static/js/2.90c17ee1.chunk.js.map": "/static/js/2.90c17ee1.chunk.js.map",
+    "static/js/2.dec0531a.chunk.js": "/static/js/2.dec0531a.chunk.js",
+    "static/js/2.dec0531a.chunk.js.map": "/static/js/2.dec0531a.chunk.js.map",
     "mode-livescript.js": "/00f32d088488515ac84b1ffe7fc0ec0d.js",
     "ftl.js": "/024358f71f8096dd8052103dced05dbc.js",
     "mode-terraform.js": "/02a3067bd4d8feab048883fbaff9722c.js",
@@ -421,14 +421,14 @@
     "smarty.js": "/ff6e85bb753b94d4add40e79a70c2875.js",
     "io.js": "/ffb285847c77432bb38e9fbf9789d323.js",
     "index.html": "/index.html",
-    "precache-manifest.44de098838c6e03e0d6776765403776d.js": "/precache-manifest.44de098838c6e03e0d6776765403776d.js",
+    "precache-manifest.d9ffaa70521b0703dde1149419721a64.js": "/precache-manifest.d9ffaa70521b0703dde1149419721a64.js",
     "service-worker.js": "/service-worker.js",
-    "static/js/2.90c17ee1.chunk.js.LICENSE.txt": "/static/js/2.90c17ee1.chunk.js.LICENSE.txt",
+    "static/js/2.dec0531a.chunk.js.LICENSE.txt": "/static/js/2.dec0531a.chunk.js.LICENSE.txt",
     "static/media/UERJ_Logo.svg": "/static/media/UERJ_Logo.e608b5a7.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.61bb465f.js",
-    "static/js/2.90c17ee1.chunk.js",
-    "static/js/main.914971b6.chunk.js"
+    "static/js/2.dec0531a.chunk.js",
+    "static/js/main.57ea0bd6.chunk.js"
   ]
 }
