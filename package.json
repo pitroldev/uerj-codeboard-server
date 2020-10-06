@@ -1,0 +1,21 @@
+{
+  "name": "uerj-codeboard-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon --inspect server.js",
+    "start": "node server.js"
+  },
+  "repository": "https://github.com/pitroldev/uerj-codeboard-server.git",
+  "author": "Petro Cardoso <petrolcds@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0",
+    "socket.io": "^2.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
