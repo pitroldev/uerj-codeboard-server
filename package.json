@@ -6,7 +6,7 @@
     "dev": "nodemon --inspect server.js",
     "start": "node server.js"
   },
-  "repository": "https://github.com/pitroldev/uerj-codeboard-server.git",
+  "repository": "https://github.com/pitroldev/uerj-codeboard-server",
   "author": "Petro Cardoso <petrolcds@gmail.com>",
   "license": "MIT",
   "dependencies": {
