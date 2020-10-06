@@ -11,7 +11,7 @@ app.use(morgan("dev"));
 
 module.exports = app;
 
-const baseDir = "./build";
+const baseDir = "./uerj-codeboard-site/build";
 app.use(express.static(`${baseDir}`));
 app.get("/codeboard/:boardName", (req, res) =>
   res.sendFile("index.html", { root: baseDir })
