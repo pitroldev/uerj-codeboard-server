@@ -1,3 +1,5 @@
+const { exec } = require("child_process");
+const { time } = require("console");
 const app = require("./src/app");
 const server = require("http").Server(app);
 const io = require("socket.io")(server);
@@ -12,23 +14,51 @@ if (process.env.NODE_ENV) {
 
 let storedData = {};
 
+
 io.on("connect", (socket) => {
   socket.on("codeboard", (boardName) => {
-    socket.emit(boardName, { ...storedData[boardName] });
-    socket.on(boardName, (user) => {
+    socket.emit(boardName, { users: storedData[boardName]?.users });
+    socket.on(`${boardName}`, (user) => { // Escrevendo no board
       const currentBoard = storedData[boardName];
       const currentUser = currentBoard && currentBoard[user.id];
+      const currentUsers = currentBoard && currentBoard.users;
+      const timeouts = currentBoard && currentBoard.timeouts;
 
-      storedData = {
-        ...storedData,
-        [boardName]: {
-          ...currentBoard,
-          [user.id]: { ...currentUser, ...user },
-        },
-      };
+      if (currentBoard) {
+        storedData[boardName][user.id] = { ...currentUser, ...user }
+        
+        if (!timeouts) {
+          storedData[boardName].timeouts = {}
+        }
 
-      socket.emit(`${boardName}/me`, { ...storedData[boardName] });
-      socket.broadcast.emit(boardName, { ...storedData[boardName] });
+        if (!currentUsers) {        
+          storedData[boardName].users = {}
+        }
+      } else {
+        storedData[boardName] = {}
+      }
+
+      socket.broadcast.emit(`${boardName}/${user.id}`, user); // emit to all
+      
+      // Typing logic 
+      if (currentUsers && !currentUsers[user.id]) {
+        storedData[boardName].users[user.id] = true
+        socket.broadcast.emit(boardName,  storedData[boardName]?.users);
+        socket.emit(boardName, storedData[boardName]?.users);
+      }
+
+      if (timeouts) {   
+        timeouts[user.id] && clearTimeout(timeouts[user.id]) 
+        timeouts[user.id] = setTimeout(() => {
+          storedData[boardName].users[user.id] = false
+          socket.broadcast.emit(`${boardName}`, storedData[boardName]?.users);
+          socket.emit(boardName, storedData[boardName]?.users);
+        }, 1000)
+      }
     });
+    
+    socket.on(`${boardName}/get`, (userID) => { // get user      
+      socket.emit(`${boardName}/${userID}`, storedData[boardName]?.[userID]);
+    })
   });
 });
