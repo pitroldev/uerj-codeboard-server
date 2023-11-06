@@ -1,22 +1,18 @@
-const { exec } = require("child_process");
-const { time } = require("console");
 const app = require("./src/app");
 const server = require("http").Server(app);
-const io = require("socket.io")(server);
-
-if (process.env.NODE_ENV) {
-  console.log("SERVER STARTED IN DEBUG MODE");
-  server.listen(3333);
-} else {
-  console.log("SERVER STARTED");
-  server.listen(process.env.PORT_UERJ_CODEBOARD_SERVER_SERVER || 21117);
-}
+const io = require("socket.io")(server, {
+  cors: {
+    methods: ['GET', 'POST']
+  }
+});
 
 let storedData = {};
 
-
 io.on("connect", (socket) => {
+  console.log('connected', socket.id)
+  
   socket.on("codeboard", (boardName) => {
+    console.log('codeboard', boardName, socket.id)
     socket.emit(boardName, { users: storedData[boardName]?.users });
     socket.on(`${boardName}`, (user) => { // Escrevendo no board
       const currentBoard = storedData[boardName];
@@ -62,3 +58,12 @@ io.on("connect", (socket) => {
     })
   });
 });
+
+
+if (process.env.NODE_ENV) {
+  console.log("SERVER STARTED IN DEBUG MODE");
+  server.listen(3333);
+} else {
+  console.log("SERVER STARTED");
+  server.listen(process.env.PORT_UERJ_CODEBOARD_SERVER_SERVER || 21117);
+}
