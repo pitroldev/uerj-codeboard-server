@@ -14,25 +14,25 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
 
-app.get("/health", (_, res) => {
+app.get("/api/health", (_, res) => {
   res.status(200).json({ status: "OK" });
 });
 
-app.post("/login", authController.login);
-app.post("/register", userController.create);
+app.post("/api/login", authController.login);
+app.post("/api/register", userController.create);
 
 app.use(needAuth);
 
-app.get("/user", userController.show);
-app.put("/user", userController.update);
+app.get("/api/user", userController.show);
+app.put("/api/user", userController.update);
 
-app.get("/rooms", roomController.list);
-app.get("/rooms/:roomId", roomController.show);
-app.put("/rooms/:roomId", roomController.update);
-app.post("/rooms", roomController.create);
+app.get("/api/rooms", roomController.list);
+app.get("/api/rooms/:roomId", roomController.show);
+app.put("/api/rooms/:roomId", roomController.update);
+app.post("/api/rooms", roomController.create);
 
-app.put("/rooms/:roomId/members", roomController.addMember);
-app.delete("/rooms/:roomId/members/:userId", roomController.removeMember);
+app.put("/api/rooms/:roomId/members", roomController.addMember);
+app.delete("/api/rooms/:roomId/members/:userId", roomController.removeMember);
 
 app.use((_, res) => {
   res.status(404).json({ message: "Endpoint não encontrado" });
