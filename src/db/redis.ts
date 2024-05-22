@@ -1,10 +1,11 @@
 import Redis from "ioredis";
 
-const { REDIS_HOST, REDIS_PORT, REDIS_PASS } = process.env;
+const { REDIS_HOST, REDIS_PORT, REDIS_PASS, REDIS_USER } = process.env;
 if (!REDIS_HOST) throw new Error("REDIS_HOST is not provided");
 
 const client = new Redis({
   host: REDIS_HOST,
+  username: REDIS_USER,
   port: REDIS_PORT ? parseInt(REDIS_PORT) : 6379,
   password: REDIS_PASS,
   lazyConnect: true,
