@@ -111,7 +111,9 @@ export async function addMember(req: AuthRequest, res: Response) {
     return;
   }
 
-  const isMember = room.members.some((member) => member.toString() === user.id);
+  const isMember =
+    room.members.some((member) => member.toString() === user.id) ||
+    room.owner.toString() === user.id;
   if (isMember) {
     res.status(400).json({ message: "Usuário já é membro desta sala" });
     return;

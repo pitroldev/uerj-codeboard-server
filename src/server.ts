@@ -9,6 +9,7 @@ import { handleSocketAuth } from "@/middlewares/socket-auth";
 
 import Board from "@/models/redis/board";
 import OnlineUser from "@/models/redis/online-user";
+import BoardViewers from "./models/redis/board-viewers";
 import { UserProps } from "@/models/mongo/user";
 
 const httpServer = new HttpServer(app);
@@ -22,13 +23,29 @@ io.use(handleSocketAuth);
 io.on("connect", (socket: Socket & { user: UserProps & { _id: string } }) => {
   const userId = socket.user._id;
 
+  socket.on("disconnecting", () => {
+    socket.rooms.forEach((id) => {
+      const isRoom = id.startsWith("room:");
+      if (isRoom) {
+        OnlineUser.removeFromRoom(id, userId);
+        socket.to(id).emit("room:left", userId);
+      }
+
+      const isBoard = id.startsWith("board:");
+      if (isBoard) {
+        // TODO: BoardOnlineUser
+        socket.to(id).emit("board:left", id, userId);
+      }
+    });
+  });
+
   socket.on("room:join", (roomId: string) => {
     // TODO: Implementar a lógica de verificação de permissão
 
     OnlineUser.addToRoom(roomId, userId).then(() => {
-      socket.join(roomId);
+      socket.join(`room:${roomId}`);
       socket.emit("room:joined", userId);
-      socket.to(roomId).emit("room:joined", userId);
+      socket.to(`room:${roomId}`).emit("room:joined", userId);
 
       OnlineUser.findByRoomId(roomId).then((users) => {
         socket.emit("room:members", users);
@@ -41,17 +58,37 @@ io.on("connect", (socket: Socket & { user: UserProps & { _id: string } }) => {
         content,
       });
     });
+  });
 
-    socket.on("disconnect", () => {
-      OnlineUser.removeFromRoom(roomId, userId);
-      socket.to(roomId).emit("room:left", userId);
+  socket.on("board:join", (roomId: string, boardId: string) => {
+    BoardViewers.addToBoard(roomId, boardId, userId);
+    BoardViewers.find(roomId, boardId).then((viewers) => {
+      socket.emit("board:viewers", viewers);
     });
+    socket.join(`board:${roomId}:${boardId}`);
+    socket
+      .to(`board:${roomId}:${boardId}`)
+      .emit("board:joined", { boardId, userId });
+  });
+
+  socket.on("board:leave", (roomId: string, boardId: string) => {
+    BoardViewers.removeFromBoard(roomId, boardId, userId);
+    socket.leave(`board:${roomId}:${boardId}`);
+    socket
+      .to(`board:${roomId}:${boardId}`)
+      .emit("board:left", { boardId, userId });
   });
 
   socket.on("board:write", (roomId: string, content: string) => {
+    socket.emit("board:typed", userId);
+    socket.to(`room:${roomId}`).emit("board:typed", userId);
+
+    // TODO: Implementar a lógica de verificação de permissão
+    // TODO: Clarificar a lógica de escrita no board
     Board.update(roomId, userId, content).then(() => {
-      socket.to(roomId).emit("board:written", userId);
-      socket.emit("board:written", userId);
+      socket
+        .to(`board:${roomId}:${userId}`)
+        .emit("board:written", { boardId: userId, content });
     });
   });
 
