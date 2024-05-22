@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+      "esModuleInterop": true,
+      "baseUrl": ".",
+      "paths": {
+        "@/*": ["./src/*"],
+        "@tests/*": ["./__tests__/*"]
+      }
+    },
+    "include": [
+      "src/**/*",
+      "__tests__/**/*"
+    ]
+  }
