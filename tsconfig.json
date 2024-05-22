@@ -1,6 +1,9 @@
 {
     "compilerOptions": {
+      "target": "ES2016",
       "esModuleInterop": true,
+      "module": "NodeNext",
+      "moduleResolution": "NodeNext",
       "baseUrl": ".",
       "paths": {
         "@/*": ["./src/*"],
