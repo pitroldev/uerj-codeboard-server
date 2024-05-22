@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "bun --hot run src/server.ts",
     "start": "bun run src/server.ts",
-    "build": "tsc --outDir dist -p ."
+    "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files --no-copy-ignored"
   },
   "repository": "https://github.com/pitroldev/uerj-codeboard-server",
   "author": "Petro Cardoso <petrolcds@gmail.com>",
@@ -21,14 +21,18 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@babel/cli": "^7.24.5",
+    "@babel/core": "^7.24.5",
+    "@babel/preset-env": "^7.24.5",
+    "@babel/preset-typescript": "^7.24.1",
     "@types/bun": "^1.1.2",
     "@types/chance": "^1.1.6",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/morgan": "^1.9.9",
+    "babel-plugin-module-resolver": "^5.0.2",
     "chance": "^1.1.11",
-    "mongodb-memory-server": "^9.2.0",
-    "ts-node": "^10.9.2"
+    "mongodb-memory-server": "^9.2.0"
   }
 }
