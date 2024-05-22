@@ -21,7 +21,7 @@ app.get("/api/health", (_, res) => {
 app.post("/api/login", authController.login);
 app.post("/api/register", userController.create);
 
-app.use(needAuth);
+app.use("/api", needAuth);
 
 app.get("/api/user", userController.show);
 app.put("/api/user", userController.update);
