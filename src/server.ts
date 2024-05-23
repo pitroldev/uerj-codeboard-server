@@ -9,7 +9,8 @@ import { handleSocketAuth } from "@/middlewares/socket-auth";
 
 import Board from "@/models/redis/board";
 import OnlineUser from "@/models/redis/online-user";
-import BoardViewers from "./models/redis/board-viewers";
+import BoardViewers from "@/models/redis/board-viewers";
+
 import { UserProps } from "@/models/mongo/user";
 
 const httpServer = new HttpServer(app);
@@ -27,13 +28,15 @@ io.on("connect", (socket: Socket & { user: UserProps & { _id: string } }) => {
     socket.rooms.forEach((id) => {
       const isRoom = id.startsWith("room:");
       if (isRoom) {
-        OnlineUser.removeFromRoom(id, userId);
+        const roomId = id.replace("room:", "");
+        OnlineUser.removeFromRoom(roomId, userId);
         socket.to(id).emit("room:left", userId);
       }
 
       const isBoard = id.startsWith("board:");
       if (isBoard) {
-        // TODO: BoardOnlineUser
+        const [roomId, boardId] = id.replace("board:", "").split(":")[1];
+        BoardViewers.removeFromBoard(roomId, boardId, userId);
         socket.to(id).emit("board:left", id, userId);
       }
     });
