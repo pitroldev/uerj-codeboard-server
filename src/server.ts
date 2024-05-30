@@ -95,6 +95,15 @@ io.on("connect", (socket: Socket & { user: UserProps & { _id: string } }) => {
     });
   });
 
+  socket.on(
+    "board:select",
+    (roomId: string, boardId: string, selection: any) => {
+      socket
+        .to(`board:${roomId}:${boardId}`)
+        .emit("board:selected", { boardId, userId, selection });
+    }
+  );
+
   socket.on("board:read", (roomId: string, targetUserId: string) => {
     Board.find(roomId, targetUserId).then((content) => {
       socket.emit("board:read", {
