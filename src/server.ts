@@ -35,7 +35,7 @@ io.on("connect", (socket: Socket & { user: UserProps & { _id: string } }) => {
 
       const isBoard = id.startsWith("board:");
       if (isBoard) {
-        const [roomId, boardId] = id.replace("board:", "").split(":")[1];
+        const [roomId, boardId] = id.replace("board:", "").split(":");
         BoardViewers.removeFromBoard(roomId, boardId, userId);
         socket.to(id).emit("board:left", id, userId);
       }
