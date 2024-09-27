@@ -3,3 +3,8 @@ yarn.lock
 
 .env
 dist
+
+# Local Terraform directories
+.terraform/
+.terraform.tfstate
+.terraform.tfstate.*

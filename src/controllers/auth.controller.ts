@@ -5,15 +5,15 @@ import { userSchema } from "@/schemas/user";
 
 import User from "@/models/mongo/user";
 
+const expectedSchema = z.object({
+  email: userSchema.shape.email,
+  password: z.string({
+    message: "Senha é obrigatória",
+  }),
+});
+
 export const login = async (req: Request, res: Response) => {
   const { body } = req;
-
-  const expectedSchema = z.object({
-    email: userSchema.shape.email,
-    password: z.string({
-      message: "Senha é obrigatória",
-    }),
-  });
 
   const result = expectedSchema.safeParse(body);
   if (!result.success) {
