@@ -5,9 +5,9 @@ import { SECRET } from "@/config";
 
 import { userSchema } from "@/schemas/user";
 
-import { type UserModel } from "./user.types";
+import { type UserDocument } from "./user.types";
 
-const UserSchema = new Schema<UserModel>(
+const UserSchema = new Schema<UserDocument>(
   {
     email: {
       type: String,
@@ -67,7 +67,7 @@ UserSchema.methods = {
   async compareHash(password: string) {
     return Bun.password.verify(password, this.password);
   },
-  async generateAuthToken(this: UserModel) {
+  async generateAuthToken(this: UserDocument) {
     const userData = this.toJSON();
     delete userData.password;
 

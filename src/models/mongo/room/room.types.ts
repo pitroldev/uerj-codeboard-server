@@ -1,4 +1,4 @@
-import { type Document, Types } from "mongoose";
+import { type Document, Model, Types } from "mongoose";
 
 export interface RoomProps {
   name: string;
@@ -8,4 +8,6 @@ export interface RoomProps {
   createdAt: Date;
 }
 
-export interface RoomModel extends RoomProps, Document {}
+export interface RoomDocument extends RoomProps, Document {}
+
+export interface RoomModel extends Model<RoomDocument> {}

@@ -1,4 +1,4 @@
-import { type Document, Types } from "mongoose";
+import { type Document, Model, Types } from "mongoose";
 
 export interface BoardProps {
   content: string;
@@ -8,4 +8,6 @@ export interface BoardProps {
   createdAt: Date;
 }
 
-export interface BoardModel extends BoardProps, Document {}
+export interface BoardDocument extends BoardProps, Document {}
+
+export interface BoardModel extends Model<BoardDocument> {}

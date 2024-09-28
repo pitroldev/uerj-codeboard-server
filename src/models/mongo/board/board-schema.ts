@@ -1,8 +1,8 @@
 import { Schema } from "mongoose";
 
-import { type BoardModel } from "./board.types";
+import { BoardDocument } from "./board.types";
 
-const BoardSchema = new Schema<BoardModel>(
+const BoardSchema = new Schema<BoardDocument>(
   {
     content: {
       type: String,

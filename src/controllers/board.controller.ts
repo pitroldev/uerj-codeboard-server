@@ -7,7 +7,9 @@ import Board from "@/models/mongo/board";
 export async function show(req: AuthRequest, res: Response) {
   const { params } = req;
 
-  const board = await Board.findById(params.roomId);
+  const board = await Board.find({
+    room: params.roomId,
+  });
 
   if (!board) {
     res.status(404).json({ message: "Board não encontrado" });

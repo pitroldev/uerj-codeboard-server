@@ -2,9 +2,9 @@ import { Schema } from "mongoose";
 
 import { roomSchema } from "@/schemas/room";
 
-import { type RoomModel } from "./room.types";
+import { type RoomDocument } from "./room.types";
 
-const RoomSchema = new Schema<RoomModel>(
+const RoomSchema = new Schema<RoomDocument>(
   {
     name: {
       type: String,

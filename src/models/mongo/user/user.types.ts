@@ -1,4 +1,4 @@
-import { type Document } from "mongoose";
+import { Model, type Document } from "mongoose";
 
 export interface UserProps {
   name: string;
@@ -8,7 +8,9 @@ export interface UserProps {
   createdAt: Date;
 }
 
-export interface UserModel extends UserProps, Document {
+export interface UserDocument extends UserProps, Document {
   generateAuthToken: () => Promise<string>;
   compareHash: (hash: string) => Promise<boolean>;
 }
+
+export interface UserModel extends Model<UserDocument> {}
