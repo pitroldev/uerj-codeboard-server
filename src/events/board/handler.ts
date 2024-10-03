@@ -3,6 +3,8 @@ import { Socket } from "socket.io";
 import Board from "@/models/redis/board";
 import BoardViewers from "@/models/redis/board-viewers";
 
+// Implementar trocar de language no board:read e board:write
+
 export const handleBoardEvents = (socket: Socket, userId: string) => {
   socket.on("board:join", (roomId: string, boardId: string) => {
     BoardViewers.addToBoard(roomId, boardId, userId);
@@ -37,11 +39,11 @@ export const handleBoardEvents = (socket: Socket, userId: string) => {
   });
 
   socket.on(
-    "board:select",
+    "board:highlight",
     (roomId: string, boardId: string, selection: any) => {
       socket
         .to(`board:${roomId}:${boardId}`)
-        .emit("board:selected", { boardId, userId, selection });
+        .emit("board:highlighted", { boardId, userId, selection });
     }
   );
 

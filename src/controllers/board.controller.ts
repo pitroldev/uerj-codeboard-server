@@ -5,9 +5,10 @@ import { AuthRequest } from "@/types/request";
 import Board from "@/models/mongo/board";
 
 export async function show(req: AuthRequest, res: Response) {
-  const { params } = req;
+  const { params, user } = req;
 
-  const board = await Board.find({
+  const board = await Board.findOne({
+    user: user._id,
     room: params.roomId,
   });
 
