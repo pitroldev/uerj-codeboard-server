@@ -6,11 +6,11 @@ provider "aws" {
 
 
 # Create EC2 instance in Hongkong
-resource "aws_instance" "hongkong_instance" {
-  provider      = aws.hongkong
-  instance_type = "t2.micro"
+# resource "aws_instance" "hongkong_instance" {
+#   provider      = aws.hongkong
+#   instance_type = "t2.micro"
 
-  tags = {
-    Name = "hongkong-instance"
-  }
-}
+#   tags = {
+#     Name = "hongkong-instance"
+#   }
+# }

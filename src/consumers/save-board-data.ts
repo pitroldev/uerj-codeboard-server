@@ -27,6 +27,6 @@ export async function saveBoardData(message: SaveBoardMessage) {
 
   await Board.findOneAndUpdate(
     { room: boardData.room, user: boardData.user },
-    { content: boardData.content }
+    { content: boardData.content, language: boardData.language }
   );
 }

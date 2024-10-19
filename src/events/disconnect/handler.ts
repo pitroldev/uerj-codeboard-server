@@ -15,13 +15,14 @@ export const handleDisconnectEvents = (socket: Socket, userId: string) => {
         OnlineUser.removeFromRoom(roomId, userId);
         socket.to(id).emit("room:left", userId);
 
-        Board.find(roomId, userId).then((content) => {
+        Board.find(roomId, userId).then(({ content, language }) => {
           sqsService.sendMessage({
             action: "save-board",
             payload: {
               user: userId,
               room: roomId,
               content,
+              language,
               createdAt: new Date(),
             },
           });

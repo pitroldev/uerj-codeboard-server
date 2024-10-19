@@ -6,11 +6,11 @@ provider "aws" {
 
 
 # Create EC2 instance in Ohio
-resource "aws_instance" "ohio_instance" {
-  provider      = aws.ohio
-  instance_type = "t2.micro"
+# resource "aws_instance" "ohio_instance" {
+#   provider      = aws.ohio
+#   instance_type = "t2.micro"
 
-  tags = {
-    Name = "ohio-instance"
-  }
-}
+#   tags = {
+#     Name = "ohio-instance"
+#   }
+# }

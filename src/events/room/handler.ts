@@ -17,10 +17,10 @@ export const handleRoomEvents = (socket: Socket, userId: string) => {
       });
     });
 
-    Board.find(roomId, userId).then((content) => {
+    Board.find(roomId, userId).then((data) => {
       socket.emit("board:read", {
         userId,
-        content,
+        ...data,
       });
     });
   });

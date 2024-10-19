@@ -4,6 +4,10 @@ import { BoardDocument } from "./board.types";
 
 const BoardSchema = new Schema<BoardDocument>(
   {
+    language: {
+      type: String,
+      required: true,
+    },
     content: {
       type: String,
       trim: true,

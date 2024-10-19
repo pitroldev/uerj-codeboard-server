@@ -28,7 +28,7 @@ app.put("/api/user", needAuth, userController.update);
 app.get("/api/rooms", needAuth, roomController.list);
 app.post("/api/rooms", needAuth, roomController.create);
 app.get("/api/rooms/:roomId", needAuth, roomController.show);
-app.post("/api/rooms/:roomId", needAuth, roomController.update);
+app.put("/api/rooms/:roomId", needAuth, roomController.update);
 
 app.post("/api/rooms/:roomId/members", needAuth, roomController.addMember);
 app.delete(
