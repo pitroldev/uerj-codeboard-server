@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
-const MONGO_URI = process.env.MONGO_URI;
+import { MONGO_URI } from "@/config";
+
 if (!MONGO_URI) throw new Error("MONGO_URI is not provided");
 
 mongoose

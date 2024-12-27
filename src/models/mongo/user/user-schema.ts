@@ -1,3 +1,4 @@
+import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { Schema } from "mongoose";
 
@@ -60,12 +61,12 @@ const UserSchema = new Schema<UserDocument>(
 
 UserSchema.pre("save", { document: true }, async function (next) {
   if (!this.isModified("password")) return next();
-  this.password = await Bun.password.hash(this.password);
+  this.password = await bcrypt.hash(this.password, 10);
 });
 
 UserSchema.methods = {
   async compareHash(password: string) {
-    return Bun.password.verify(password, this.password);
+    return bcrypt.compare(password, this.password);
   },
   async generateAuthToken(this: UserDocument) {
     const userData = this.toJSON();

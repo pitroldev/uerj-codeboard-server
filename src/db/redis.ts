@@ -1,6 +1,7 @@
 import Redis from "ioredis";
 
-const { REDIS_HOST, REDIS_PORT, REDIS_PASS, REDIS_USER } = process.env;
+import { REDIS_HOST, REDIS_PASS, REDIS_PORT, REDIS_USER } from "@/config";
+
 if (!REDIS_HOST) throw new Error("REDIS_HOST is not provided");
 
 const client = new Redis({

@@ -1,14 +1,14 @@
-import { beforeAll, afterAll, afterEach } from "bun:test";
+import { beforeAll, afterAll, afterEach } from "vitest";
 import MockDB from "@tests/mock/mongodb";
 
-beforeAll(async function () {
+beforeAll(async () => {
   await MockDB.setup();
 });
 
-afterEach(async function () {
+afterEach(async () => {
   await MockDB.clear();
 });
 
-afterAll(async function () {
+afterAll(async () => {
   await MockDB.teardown();
 });

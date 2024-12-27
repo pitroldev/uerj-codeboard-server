@@ -1,3 +1,6 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import { Server as HttpServer } from "http";
 import { Socket, Server as SocketIOServer } from "socket.io";
 
@@ -7,8 +10,8 @@ import app from "@/app";
 
 import { ENV, SERVER_PORT } from "@/config";
 
-import sqsService from "@/services/sqs";
-import { messageHandler } from "@/consumers/handler";
+// import sqsService from "@/services/sqs";
+// import { messageHandler } from "@/consumers/handler";
 
 import { handleSocketAuth } from "@/middlewares/socket-auth";
 
@@ -38,6 +41,6 @@ io.on("connect", (socket: Socket) => {
   handleBoardEvents(socket, userId);
 });
 
-sqsService.startPolling(15_000, async (message) => {
-  await messageHandler(message);
-});
+// sqsService.startPolling(15_000, async (message) => {
+//   await messageHandler(message);
+// });
