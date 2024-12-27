@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --no-notify src/server.ts",
     "start": "pm2 start ecosystem.config.js",
+    "stop": "pm2 del all",
     "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files --no-copy-ignored",
     "test": "vitest dev -w --ui --api 9547"
   },

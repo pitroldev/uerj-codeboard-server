@@ -15,8 +15,13 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
 
-app.get("/api/health", (_, res) => {
-  res.status(200).send();
+app.get("/api/health", async (_, res) => {
+  res.status(200).json({
+    pid: process.pid,
+    app_instance: process.env.NODE_APP_INSTANCE || "N/A",
+    aws_instance_name: process.env.AWS_INSTANCE_NAME || "N/A",
+    uptime: process.uptime(),
+  });
 });
 
 app.post("/api/auth/login", authController.login);
