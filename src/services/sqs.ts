@@ -1,29 +1,35 @@
-import AWS from "aws-sdk";
+import {
+  DeleteMessageCommand,
+  ReceiveMessageCommand,
+  SendMessageCommand,
+  SQSClient,
+} from "@aws-sdk/client-sqs";
 
 import { SQS_QUEUE_URL } from "@/config";
 import { MessagePayload } from "@/schemas/message-payload";
 
-AWS.config.update({ region: "us-east-1" });
-
 class SQSService {
-  private sqs: AWS.SQS;
+  private sqs: SQSClient;
   private pollInterval: NodeJS.Timeout | null = null;
   private queueUrl: string;
 
   constructor(queueUrl: string) {
     if (!queueUrl) throw new Error("Queue URL not provided");
-    this.sqs = new AWS.SQS({ apiVersion: "2012-11-05" });
+    this.sqs = new SQSClient({
+      apiVersion: "2012-11-05",
+      endpoint: queueUrl,
+    });
     this.queueUrl = queueUrl;
   }
 
   async sendMessage(messageBody: MessagePayload): Promise<void> {
     try {
-      await this.sqs
-        .sendMessage({
+      await this.sqs.send(
+        new SendMessageCommand({
           QueueUrl: this.queueUrl,
           MessageBody: JSON.stringify(messageBody),
         })
-        .promise();
+      );
     } catch (error) {
       console.error("[ERROR] Error sending message:", error);
     }
@@ -33,13 +39,13 @@ class SQSService {
     callback: (message: string) => Promise<void> | void
   ): Promise<void> {
     try {
-      const data = await this.sqs
-        .receiveMessage({
+      const data = await this.sqs.send(
+        new ReceiveMessageCommand({
           QueueUrl: this.queueUrl,
           MaxNumberOfMessages: 10,
           WaitTimeSeconds: 10,
         })
-        .promise();
+      );
 
       if (!data.Messages || data.Messages.length === 0) return;
 
@@ -54,12 +60,12 @@ class SQSService {
 
   private async deleteMessage(receiptHandle: string): Promise<void> {
     try {
-      await this.sqs
-        .deleteMessage({
+      await this.sqs.send(
+        new DeleteMessageCommand({
           QueueUrl: this.queueUrl,
           ReceiptHandle: receiptHandle,
         })
-        .promise();
+      );
     } catch (error) {
       console.error("[ERROR] Error deleting message:", error);
     }
