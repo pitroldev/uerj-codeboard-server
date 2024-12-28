@@ -4,7 +4,7 @@ variable "instance_warmup_seconds" {
   default     = 150
 }
 
-variable "asg_coldown_seconds" {
+variable "asg_cooldown_seconds" {
   description = "The number of seconds to wait for the EC2 instances to warm up."
   type        = number
   default     = 150

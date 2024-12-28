@@ -1,7 +1,3 @@
-# Configure the AWS provider
-provider "aws" {
-  region = "us-east-2"
-}
 
 # Create the SQS queue
 resource "aws_sqs_queue" "codeboard_sqs_queue" {

@@ -1,6 +1,6 @@
 import { Socket } from "socket.io";
 
-// import sqsService from "@/services/sqs";
+import sqsService from "@/services/sqs";
 
 import Board from "@/models/redis/board";
 import OnlineUser from "@/models/redis/online-user";
@@ -16,16 +16,16 @@ export const handleDisconnectEvents = (socket: Socket, userId: string) => {
         socket.to(id).emit("room:left", userId);
 
         Board.find(roomId, userId).then(({ content, language }) => {
-          // sqsService.sendMessage({
-          //   action: "save-board",
-          //   payload: {
-          //     user: userId,
-          //     room: roomId,
-          //     content,
-          //     language,
-          //     createdAt: new Date(),
-          //   },
-          // });
+          sqsService.sendMessage({
+            action: "save-board",
+            payload: {
+              user: userId,
+              room: roomId,
+              content,
+              language,
+              createdAt: new Date(),
+            },
+          });
         });
       }
 

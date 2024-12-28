@@ -17,8 +17,8 @@ resource "aws_autoscaling_group" "asg" {
   desired_capacity          = 2
   max_size                  = 3
   health_check_type         = "ELB"
-  health_check_grace_period = var.asg_coldown_seconds
-  default_cooldown          = var.asg_coldown_seconds
+  health_check_grace_period = var.asg_cooldown_seconds
+  default_cooldown          = var.asg_cooldown_seconds
   default_instance_warmup   = var.instance_warmup_seconds
 
   vpc_zone_identifier  = [aws_subnet.public.id]
@@ -44,7 +44,7 @@ resource "aws_autoscaling_policy" "scale_up" {
   name                   = "uerj-codeboard-scale-up"
   scaling_adjustment     = 1
   adjustment_type        = "ChangeInCapacity"
-  cooldown               = var.asg_coldown_seconds
+  cooldown               = var.asg_cooldown_seconds
   autoscaling_group_name = aws_autoscaling_group.asg.name
 }
 
@@ -69,13 +69,8 @@ resource "aws_autoscaling_policy" "scale_down" {
   name                   = "uerj-codeboard-scale-down"
   scaling_adjustment     = -1
   adjustment_type        = "ChangeInCapacity"
-  cooldown               = var.asg_coldown_seconds
+  cooldown               = var.asg_cooldown_seconds
   autoscaling_group_name = aws_autoscaling_group.asg.name
-
-  step_adjustment {
-    metric_interval_lower_bound = 0
-    scaling_adjustment          = -1
-  }
 }
 
 resource "aws_cloudwatch_metric_alarm" "scale_down" {
@@ -87,7 +82,7 @@ resource "aws_cloudwatch_metric_alarm" "scale_down" {
   period              = 60
   statistic           = "Average"
   threshold           = 30
-  alarm_description   = "This metric monitors uerj-codeboard ec2 cpu utilization and triggers a scale down event when the threshold is less than or equal to 30% for 1 minute."
+  alarm_description   = "This metric monitors uerj-codeboard EC2 CPU utilization and triggers a scale-down event when the threshold is less than or equal to 30% for 1 minute."
   alarm_actions       = [aws_autoscaling_policy.scale_down.arn]
 
   dimensions = {

@@ -9,16 +9,13 @@ export const options = {
   ],
 };
 
-export default function () {
-  const url = "http://localhost:3333/api/health";
-  const res = http.get(url);
-
+function logResponse(res) {
   if (res.error_code) {
     console.error(
       JSON.stringify({
         timestamp: new Date().toISOString(),
-        error_code: res.error_code,
-        error_message: res.error,
+        latency: res.timings.duration,
+        status: res.error_code,
       })
     );
   } else {
@@ -31,6 +28,13 @@ export default function () {
       })
     );
   }
+}
+
+export default function () {
+  const url = "http://localhost:3333/api/health";
+  const res = http.get(url);
+
+  logResponse(res);
 
   check(res, { "status is 200": (r) => r.status === 200 });
 

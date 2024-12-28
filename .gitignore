@@ -8,3 +8,7 @@ dist
 .terraform/
 .terraform.tfstate
 .terraform.tfstate.*
+
+# Local localstack directories
+localstack_providers_override.tf
+docker/localstack/volume
