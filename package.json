@@ -7,7 +7,8 @@
     "start": "pm2 start ecosystem.config.js",
     "stop": "pm2 del all",
     "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files --no-copy-ignored",
-    "test": "vitest dev -w --ui --api 9547"
+    "test": "vitest dev -w --ui --api 9547",
+    "stress:user-flow": "cmd /c \"set K6_WEB_DASHBOARD=true && k6 run __tests__/stress/user-flow-test.js\""
   },
   "repository": "https://github.com/pitroldev/uerj-codeboard-server",
   "author": "Petro Cardoso <petrolcds@gmail.com>",
