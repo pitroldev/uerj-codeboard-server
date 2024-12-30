@@ -75,9 +75,7 @@ export default function () {
     const received = http.get(`http://${socketIoPath}polling`);
 
     // substring 1 to remove first char protocol number
-    const { sid, upgrades, pingInterval, pingTimeout, maxPayload } = JSON.parse(
-      received.body.substring(1)
-    );
+    const { sid, upgrades } = JSON.parse(received.body.substring(1));
 
     // Server informs websocket available
     if (upgrades.includes("websocket")) {
