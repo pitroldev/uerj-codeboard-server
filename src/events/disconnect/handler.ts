@@ -22,7 +22,7 @@ export const handleDisconnectEvents = (socket: Socket, userId: string) => {
               user: userId,
               room: roomId,
               content,
-              language,
+              language: language || "python",
               createdAt: new Date(),
             },
           });
