@@ -24,14 +24,16 @@ const httpServer = new HttpServer(app);
 httpServer.listen(SERVER_PORT);
 console.log(`[SERVER] ${ENV} server running on port ${SERVER_PORT}`);
 
-const io = new SocketIOServer(httpServer, {
-  transports: ["websocket", "polling"],
-  cors: { methods: ["GET", "POST"] },
-});
 const pubClient = redisClient;
 const subClient = pubClient.duplicate();
 
-io.adapter(createAdapter(pubClient, subClient) as any);
+subClient.connect();
+
+const io = new SocketIOServer(httpServer, {
+  transports: ["websocket", "polling"],
+  cors: { methods: ["GET", "POST"] },
+  adapter: createAdapter(pubClient, subClient),
+});
 
 io.use(handleSocketAuth);
 
