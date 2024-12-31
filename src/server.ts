@@ -21,7 +21,6 @@ import { handleBoardEvents } from "@/events/board";
 import { handleDisconnectEvents } from "@/events/disconnect";
 
 const httpServer = new HttpServer(app);
-httpServer.listen(SERVER_PORT);
 console.log(`[SERVER] ${ENV} server running on port ${SERVER_PORT}`);
 
 const pubClient = redisClient;
@@ -48,6 +47,8 @@ io.on("connect", (socket: Socket) => {
   handleRoomEvents(socket, userId);
   handleBoardEvents(socket, userId);
 });
+
+httpServer.listen(SERVER_PORT);
 
 sqsService.startPolling(15_000, async (message) => {
   await messageHandler(message);
