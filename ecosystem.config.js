@@ -1,7 +1,6 @@
 module.exports = {
   apps: [
     {
-      max_restarts: 5,
       name: "server",
       script: "./dist/server.js",
       log_date_format: "YYYY-MM-DD HH:mm:ss",
