@@ -65,7 +65,9 @@ export async function list(req: AuthRequest, res: Response) {
 
   const rooms = await Room.find({
     $or: [{ owner: user._id }, { members: user._id }],
-  }).populate(["members", "owner"]);
+  })
+    .populate(["members", "owner"])
+    .limit(50);
 
   return res.status(200).json({ data: rooms });
 }
