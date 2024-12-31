@@ -15,7 +15,7 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
 
-app.get("/api/health", async (_, res) => {
+app.get("/health", async (_, res) => {
   res.status(200).json({
     pid: process.pid,
     app_instance: process.env.NODE_APP_INSTANCE || "N/A",
