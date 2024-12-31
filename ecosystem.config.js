@@ -8,7 +8,6 @@ module.exports = {
       // out_file: "/var/log/pm2/server_out.log",
       exec_mode: "cluster",
       instances: "max",
-      // combine_logs: true,
     },
   ],
 };
