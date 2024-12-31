@@ -15,7 +15,7 @@
   "license": "MIT",
   "dependencies": {
     "@aws-sdk/client-sqs": "^3.716.0",
-    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.19.2",
@@ -31,7 +31,6 @@
     "@babel/core": "^7.24.5",
     "@babel/preset-env": "^7.24.5",
     "@babel/preset-typescript": "^7.24.1",
-    "@types/bcrypt": "^5.0.2",
     "@types/bun": "^1.1.2",
     "@types/chance": "^1.1.6",
     "@types/cors": "^2.8.17",
