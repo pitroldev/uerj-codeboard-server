@@ -19,7 +19,7 @@ app.get("/health", async (_, res) => {
   res.status(200).json({
     pid: process.pid,
     app_instance: process.env.NODE_APP_INSTANCE || "N/A",
-    aws_instance_iD: process.env.AWS_INSTANCE_ID || "N/A",
+    aws_instance_id: process.env.AWS_INSTANCE_ID || "N/A",
     uptime: process.uptime(),
   });
 });

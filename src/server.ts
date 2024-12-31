@@ -3,9 +3,10 @@ dotenv.config();
 
 import { Server as HttpServer } from "http";
 import { Socket, Server as SocketIOServer } from "socket.io";
+import { createAdapter } from "@socket.io/redis-adapter";
 
 import "@/db/mongo";
-import "@/db/redis";
+import redisClient from "@/db/redis";
 import app from "@/app";
 
 import { ENV, SERVER_PORT } from "@/config";
@@ -24,8 +25,13 @@ httpServer.listen(SERVER_PORT);
 console.log(`[SERVER] ${ENV} server running on port ${SERVER_PORT}`);
 
 const io = new SocketIOServer(httpServer, {
+  transports: ["websocket", "polling"],
   cors: { methods: ["GET", "POST"] },
 });
+const pubClient = redisClient;
+const subClient = pubClient.duplicate();
+
+io.adapter(createAdapter(pubClient, subClient) as any);
 
 io.use(handleSocketAuth);
 
