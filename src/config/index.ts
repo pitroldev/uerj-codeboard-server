@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 const envSchema = z.object({
-  ENV: z.string(),
+  ENV: z.string().default("production"),
   SECRET: z.string().default("secret_key"),
   SERVER_PORT: z.string().default("3333"),
   SQS_QUEUE_URL: z
