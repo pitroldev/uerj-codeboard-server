@@ -26,8 +26,6 @@ console.log(`[SERVER] ${ENV} server running on port ${SERVER_PORT}`);
 const pubClient = redisClient;
 const subClient = pubClient.duplicate();
 
-subClient.connect();
-
 const io = new SocketIOServer(httpServer, {
   transports: ["websocket", "polling"],
   cors: { methods: ["GET", "POST"] },

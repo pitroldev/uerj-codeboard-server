@@ -15,7 +15,7 @@ resource "aws_autoscaling_group" "asg" {
   name                      = "uerj-codeboard-asg"
   min_size                  = 2
   desired_capacity          = 2
-  max_size                  = 3
+  max_size                  = 5
   health_check_type         = "ELB"
   health_check_grace_period = var.asg_cooldown_seconds
   default_cooldown          = var.asg_cooldown_seconds
@@ -56,7 +56,7 @@ resource "aws_cloudwatch_metric_alarm" "scale_up" {
   namespace           = "AWS/EC2"
   period              = 60
   statistic           = "Average"
-  threshold           = 70
+  threshold           = 60
   alarm_description   = "This metric monitors uerj-codeboard ec2 cpu utilization and triggers a scale up event when the threshold is greater than or equal to 70% for 1 minute."
   alarm_actions       = [aws_autoscaling_policy.scale_up.arn]
 

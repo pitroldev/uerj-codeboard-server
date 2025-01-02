@@ -1,5 +1,10 @@
 resource "aws_security_group" "instance_security_group" {
   name_prefix = "uerj_codeboard_instance_sg_"
+  vpc_id      = aws_vpc.main.id
+
+  tags = {
+    Name = "uerj-codeboard-asg-sg"
+  }
 
   egress {
     from_port   = 0
@@ -23,6 +28,13 @@ resource "aws_security_group" "instance_security_group" {
   }
 
   ingress {
+    from_port   = 3000
+    to_port     = 3000
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
@@ -37,7 +49,7 @@ resource "aws_lb" "alb" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.instance_security_group.id]
-  subnets            = [aws_subnet.public.id]
+  subnets            = [aws_subnet.public.id, aws_subnet.private.id]
 
   enable_deletion_protection = false
 
