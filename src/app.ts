@@ -15,7 +15,7 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
 
-app.get("/health", async (_, res) => {
+app.get("/cb/health", async (_, res) => {
   res.status(200).json({
     pid: process.pid,
     app_instance: process.env.NODE_APP_INSTANCE || "N/A",
@@ -24,25 +24,25 @@ app.get("/health", async (_, res) => {
   });
 });
 
-app.post("/api/auth/login", authController.login);
-app.post("/api/auth/signup", userController.create);
+app.post("/cb/api/auth/login", authController.login);
+app.post("/cb/api/auth/signup", userController.create);
 
-app.get("/api/user", needAuth, userController.show);
-app.put("/api/user", needAuth, userController.update);
+app.get("/cb/api/user", needAuth, userController.show);
+app.put("/cb/api/user", needAuth, userController.update);
 
-app.get("/api/rooms", needAuth, roomController.list);
-app.post("/api/rooms", needAuth, roomController.create);
-app.get("/api/rooms/:roomId", needAuth, roomController.show);
-app.put("/api/rooms/:roomId", needAuth, roomController.update);
+app.get("/cb/api/rooms", needAuth, roomController.list);
+app.post("/cb/api/rooms", needAuth, roomController.create);
+app.get("/cb/api/rooms/:roomId", needAuth, roomController.show);
+app.put("/cb/api/rooms/:roomId", needAuth, roomController.update);
 
-app.post("/api/rooms/:roomId/members", needAuth, roomController.addMember);
+app.post("/cb/api/rooms/:roomId/members", needAuth, roomController.addMember);
 app.delete(
-  "/api/rooms/:roomId/members/:userId",
+  "/cb/api/rooms/:roomId/members/:userId",
   needAuth,
   roomController.removeMember
 );
 
-app.get("/api/board/:roomId", needAuth, boardController.show);
+app.get("/cb/api/board/:roomId", needAuth, boardController.show);
 
 app.use((_, res) => {
   res.status(404).send();
