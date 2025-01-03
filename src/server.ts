@@ -27,6 +27,7 @@ const pubClient = redisClient;
 const subClient = pubClient.duplicate();
 
 const io = new SocketIOServer(httpServer, {
+  path: "/cb/socket.io",
   transports: ["websocket", "polling"],
   cors: { methods: ["GET", "POST"] },
   adapter: createAdapter(pubClient, subClient),
