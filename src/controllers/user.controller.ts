@@ -24,7 +24,10 @@ export async function create(req: Request, res: Response) {
   const user = await User.create(result.data);
   delete user.password;
 
-  return res.status(201).json({
+  const authToken = await user.generateAuthToken();
+
+  res.status(201).json({
+    authToken,
     data: user,
     message: "Usuário criado com sucesso",
   });
